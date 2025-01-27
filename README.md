@@ -223,3 +223,56 @@ To use the `arweave` library in your project, you need to install it using npm. 
 You're now ready to proceed with creating and managing your wallet! 🎉
 ---
 Once installed, you're ready to work with the `arweave` library! 🚀
+---
+
+## Step: Retrieve the Wallet Address 📬
+
+The receive address for an Arweave wallet is derived from the wallet's JSON key file (`wallet.json`). Here's how you can retrieve it:
+
+---
+
+### Step 1: Locate Your Wallet File
+Make sure your wallet file is stored in the correct path, for example:
+```bash
+/mnt/sda1/arweave_wallet/wallet.json
+```
+---
+### Step 2: Use the Following Script to Retrieve the Address
+Create a script called `getAddress.js` to fetch the wallet's address:
+
+```bash
+sudo nano /mnt/sda1/arweave_project/getAddress.js
+```
+
+Add this code to the file:
+```javascript
+const Arweave = require('arweave');
+const fs = require('fs');
+
+const arweave = Arweave.init({
+    host: 'arweave.net',
+    port: 443,
+    protocol: 'https'
+});
+
+async function getAddress() {
+    const key = JSON.parse(fs.readFileSync('/mnt/sda1/arweave_wallet/wallet.json', 'utf-8'));
+    const address = await arweave.wallets.jwkToAddress(key);
+
+    console.log(`Wallet Address: ${address}`);
+}
+
+getAddress();
+```
+---
+### Step 3: Run the Script
+Run the script to retrieve the address:
+```bash
+sudo node /mnt/sda1/arweave_project/getAddress.js
+```
+---
+### Step 4: Output
+The script will display the wallet's receive address. Copy this address to use for receiving funds.
+
+---
+
